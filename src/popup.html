@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <style>
+            body{
+                margin: 0;
+                padding: 0;
+            }
+            button{
+                appearance: none;
+                width: 140px;
+                border: none;
+                background-color: #CCC;
+                padding: 20px;
+                font-weight: bold;
+            }
+            button:first-child{
+                margin-bottom: 1px;
+            }
+            button:hover{
+                color: white;
+            }
+            #getFormValues:hover{
+                background-color: rgb(245, 139, 0);
+            }
+            #setFormValues:hover{
+                background-color: rgb(9, 150, 84);
+            }
+            #checkFormValues{
+                background-color: rgb(252, 255, 71);
+            }
+            #checkFormValues:hover{
+                color: #330;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="getFormValues">FORM GET</button>
+        <button id="setFormValues">FORM SET</button>
+        <button id="checkFormValues">CHECK VALUE</button>
+        <script src="popup.js"></script>
+    </body>
+</html>

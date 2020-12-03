@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "Mail Tester",
+    "author": "suhirock",
+    "version": "1.0",
+    "description": "お問い合わせフォームの入力項目をURL別に保存する",
+    "permissions": ["tabs","storage"],
+    "content_scripts":[{
+        "matches": ["<all_urls>"],
+        "js":["scripts.js"]
+    }],
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_icon": "images/icon48.png"
+    },
+    "icons":{
+        "32": "images/icon32.png",
+        "48": "images/icon48.png",
+        "180": "images/icon180.png"
+    }
+}

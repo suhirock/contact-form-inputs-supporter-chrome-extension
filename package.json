@@ -1,0 +1,20 @@
+{
+  "name": "mail_tester_chrome_extension",
+  "version": "1.0.0",
+  "description": "Mail test easy by chrome extension",
+  "scripts": {
+    "build": "npm run dist && npm run jsmin && npm run htmlmin && npm run replace && npm run cleanup",
+    "dist": "cp -fr src/. dist/",
+    "jsmin": "terser --compress --mangle --output=\"dist/popup.min.js\" -- dist/popup.js && rm dist/popup.js && terser --compress --mangle --output=\"dist/scripts.min.js\" -- dist/scripts.js && rm dist/scripts.js",
+    "htmlmin": "html-minifier dist/popup.html --minify-css --collapse-whitespace --collapse-inline-tag-whitespace --preserve-line-breaks -o dist/popup.html",
+    "replace":"sed -i -e \"s/.js/.min.js/g\" dist/popup.html && sed -i -e \"s/scripts.js/scripts.min.js/g\" dist/manifest.json",
+    "cleanup": "rm dist/popup.html-e && rm dist/manifest.json-e",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "suhirock",
+  "license": "MIT",
+  "devDependencies": {
+    "html-minifier": "^4.0.0",
+    "terser": "^5.5.1"
+  }
+}
