@@ -145,8 +145,7 @@ class MT {
             } else if(form_elements[i].tagName === 'INPUT'){
                 if(form_elements[i].type === 'hidden' || form_elements[i].type === 'submit'){
                     continue
-                }
-                if(form_elements[i].type === 'checkbox' || form_elements[i].type === 'radio'){
+                } else if(form_elements[i].type === 'checkbox' || form_elements[i].type === 'radio'){
                     if(form_elements[i].checked){
                         form_value = form_elements[i].value
                     } else {
@@ -155,10 +154,34 @@ class MT {
                 } else {
                     form_value = form_elements[i].value
                 }
+            } else if(form_elements[i].tagName === 'SELECT') {
+                if(form_elements[i].multiple){
+                    const opts = form_elements[i].querySelectorAll('option')
+                    let opts_values = []
+                    for(let j=0;j<opts.length;j++){
+                        if(opts[j].selected){
+                            opts_values.push(opts[j].value)
+                        }
+                    }
+                    if(opts_values.length > 0){
+                        form_value = opts_values
+                    }
+                } else {    
+                    form_value = form_elements[i].value
+                }
             } else {
                 form_value = form_elements[i].value
             }
-            temp_form_values[form_elements[i].name] = form_value
+            
+            if(form_elements[i].name.indexOf('[]') != -1){
+                if(! temp_form_values[form_elements[i].name]){
+                    temp_form_values[form_elements[i].name] = []
+                }
+                temp_form_values[form_elements[i].name].push(form_value)
+            } else {
+                temp_form_values[form_elements[i].name] = form_value
+            }
+            
         }
 
         let temp = {}
@@ -200,14 +223,36 @@ class MT {
                     if(form_elements[i].tagName === 'INPUT'){
                     // INPUT
                         if(form_elements[i].type === 'checkbox' || form_elements[i].type === 'radio'){
-                            if(form_elements[i].value === data[form_elements[i].name]){
-                                form_elements[i].checked = true
+                            if(form_elements[i].name.indexOf('[]') != -1){
+                                data[form_elements[i].name].map(e => {
+                                    if(e === form_elements[i].value){
+                                        form_elements[i].checked = true
+                                    }
+                                })
+                            } else {
+                                if(form_elements[i].value === data[form_elements[i].name]){
+                                    form_elements[i].checked = true
+                                } 
+                            }
+                            
+                        } else {
+                            form_elements[i].value = data[form_elements[i].name]
+                        }
+                    } else if(form_elements[i].tagName === 'SELECT') {
+                    // SELECT
+                        if(form_elements[i].multiple){
+                            const opts = form_elements[i].querySelectorAll('option')
+                            for(let j=0;j<opts.length;j++){
+                                data[form_elements[i].name].map(e => {
+                                    if(e === opts[j].value){
+                                        opts[j].selected = true
+                                    }
+                                })
                             }
                         } else {
                             form_elements[i].value = data[form_elements[i].name]
                         }
                     } else {
-                    // SELECT
                         form_elements[i].value = data[form_elements[i].name]
                     }
                 }
