@@ -1,4 +1,4 @@
-# Mail Tester
+# Contact Form Inputs Supporter
 
 Mail test by for chrome extension.
 This extension get the value of the form once entered, and set
