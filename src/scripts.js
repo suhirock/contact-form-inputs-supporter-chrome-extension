@@ -341,6 +341,20 @@ class MT {
     static closeModal() {
         document.querySelector('.mail-tester__modal').remove()
     }
+
+    /**
+     * check value
+     */
+    static checkStorageValue(callback) {
+        const http = location.href
+        chrome.storage.local.get([http], function(result) {
+            if(! result[http]){
+                alert('データがありません')
+            } else {
+                callback()
+            }
+        })
+    }
 }
 
 /**
@@ -374,9 +388,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             alert('フォーム要素がありません')
             return false
         } else if(1 < MT.getForms().length){
-            MT.focusForms('insert')
+            MT.checkStorageValue(MT.focusForms('insert'))
         } else {
-            MT.singleForm('insert')
+            MT.checkStorageValue(MT.singleForm('insert'))
         }
         sendResponse('close')
     }
